@@ -1,40 +1,14 @@
-# QUAN TRỌNG: Phải có 2 dòng này
-server:
-  port: ${PORT:8080}
-  address: 0.0.0.0  # BẮT BUỘC cho Docker container
 
-spring:
-  # TẮT HOÀN TOÀN mọi thứ phức tạp
-  main:
-    web-application-type: servlet
-    banner-mode: off
-  
-  # TẮT DATABASE 100%
-  autoconfigure:
-    exclude:
-      - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
-      - org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
-      - org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration
-      - org.springframework.boot.autoconfigure.data.jpa.JpaRepositoriesAutoConfiguration
-      - org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
-      - org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration
-  
-  # Tắt JPA
-  jpa:
-    enabled: false
-  
-  # Tắt datasource
-  datasource:
-    url: ""
-  
-  # Tắt thymeleaf cache
-  thymeleaf:
-    cache: false
+server.port=8080
+spring.datasource.url=jdbc:mysql://localhost:3306/student?useSSL=false&serverTimezone=UTC
+spring.datasource.username=root
+spring.datasource.password=123456
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
 
-# Log đơn giản
-logging:
-  level:
-    root: INFO
-    org.springframework: INFO
-  pattern:
-    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.H2Dialect
+
+spring.h2.console.enabled=true
+spring.h2.console.path=/h2-console
