@@ -1,27 +1,37 @@
+# File: src/main/resources/application.yml
+server:
+  port: ${PORT:8080}
+  address: 0.0.0.0
+
 spring:
-  datasource:
+  application:
+    name: student-management
   
-    # Cách 2: Tách biệt từng biến
-    url: jdbc:mysql://${MYSQLHOST:localhost}:${MYSQLPORT:3306}/${MYSQLDATABASE:mydb}?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&useUnicode=true&characterEncoding=UTF-8
+  datasource:
+    url: jdbc:mysql://${MYSQLHOST:localhost}:${MYSQLPORT:3306}/${MYSQLDATABASE:studentdb}?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
     username: ${MYSQLUSER:root}
-    password: ${MYSQLPASSWORD:password}
-    
+    password: ${MYSQLPASSWORD:}
+    driver-class-name: com.mysql.cj.jdbc.Driver
     hikari:
-      connection-timeout: 30000  # 30 giây
+      connection-timeout: 60000
       maximum-pool-size: 10
-      minimum-idle: 2
-      idle-timeout: 600000  # 10 phút
-      max-lifetime: 1800000  # 30 phút
   
   jpa:
     hibernate:
-      ddl-auto: update  # Hoặc "validate" nếu đã có database
+      ddl-auto: update
+    show-sql: true
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
-        connection:
-          provider_disables_autocommit: true
-        jdbc:
-          time_zone: UTC
-        # Tắt schema validation nếu cần
-        # temp.use_jdbc_metadata_defaults: false
+        format_sql: true
+  
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    cache: false
+
+logging:
+  level:
+    root: INFO
+    org.springframework.web: DEBUG
+    com.example.student: DEBUG
