@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.student.entity.Student;
 import com.example.student.service.StudentService;
@@ -19,10 +21,39 @@ public class StudentController {
   public String listStudents(Model model){
     List<Student>students=studentService.getAllStudent();
     model.addAttribute("students",students);
-    return "students";
+    return "listStudent";
+  }
+  @GetMapping("/create")
+  public String createForm(){
+      return "create";
+
+  }
+  
+  @PostMapping("/create")
+  public String create(Student student) {
+  studentService.createStudent(student);
+    return "redirect:/students";
   }
 
 
+  @GetMapping("/edit/{id}")
+  public String editForm(@PathVariable int id, Model model) {
+    model.addAttribute("student", studentService.findOne(id));
+    return "edit";
+  }
+
+  @PostMapping("/edit/{id}")
+  public String update(@PathVariable int id, Student student) {
+    studentService.updateStudent(id, student);
+    return "redirect:/students";
+  }
+
+  @GetMapping("/delete/{id}")
+  public String delete(@PathVariable int id) {
+    studentService.DeleteStudent(id);
+    return "redirect:/students";
+  }
+}
 
 
 
@@ -70,4 +101,4 @@ public class StudentController {
   //   list.add(new Student(3, "Hieu", 12));
   //   return list;
   // }
-}
+
