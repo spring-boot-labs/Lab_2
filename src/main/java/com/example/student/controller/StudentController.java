@@ -34,7 +34,7 @@ public class StudentController {
   @PostMapping("/create")
   public String create(Student student) {
   studentService.createStudent(student);
-    return "redirect:/students";
+    return "redirect:/";
   }
 
 
@@ -47,13 +47,13 @@ public class StudentController {
   @PostMapping("/edit/{id}")
   public String update(@PathVariable int id, Student student) {
     studentService.updateStudent(id, student);
-    return "redirect:/students";
+    return "redirect:/";
   }
 
   @GetMapping("/delete/{id}")
   public String delete(@PathVariable int id) {
     studentService.DeleteStudent(id);
-    return "redirect:/students";
+    return "redirect:/";
   }
 }
 
