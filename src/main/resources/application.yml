@@ -1,21 +1,27 @@
 spring:
-  application:
-    name: your-app-name
-  
   datasource:
-    url: ${JDBC_DATABASE_URL:jdbc:mysql://localhost:3306/yourdb}
-    username: ${JDBC_DATABASE_USERNAME:root}
-    password: ${JDBC_DATABASE_PASSWORD:password}
-    driver-class-name: com.mysql.cj.jdbc.Driver
+  
+    # Cách 2: Tách biệt từng biến
+    url: jdbc:mysql://${MYSQLHOST:localhost}:${MYSQLPORT:3306}/${MYSQLDATABASE:mydb}?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&useUnicode=true&characterEncoding=UTF-8
+    username: ${MYSQLUSER:root}
+    password: ${MYSQLPASSWORD:password}
+    
+    hikari:
+      connection-timeout: 30000  # 30 giây
+      maximum-pool-size: 10
+      minimum-idle: 2
+      idle-timeout: 600000  # 10 phút
+      max-lifetime: 1800000  # 30 phút
   
   jpa:
     hibernate:
-      ddl-auto: update
-    show-sql: true
+      ddl-auto: update  # Hoặc "validate" nếu đã có database
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
-        format_sql: true
-
-server:
-  port: ${PORT:8080}
+        connection:
+          provider_disables_autocommit: true
+        jdbc:
+          time_zone: UTC
+        # Tắt schema validation nếu cần
+        # temp.use_jdbc_metadata_defaults: false
