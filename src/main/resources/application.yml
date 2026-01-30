@@ -1,36 +1,40 @@
-# application.yml - CONFIG NÀY SẼ GIÚP APP START
+# QUAN TRỌNG: Phải có 2 dòng này
 server:
   port: ${PORT:8080}
-  address: 0.0.0.0
+  address: 0.0.0.0  # BẮT BUỘC cho Docker container
 
 spring:
-  # QUAN TRỌNG: Tắt database auto-config
+  # TẮT HOÀN TOÀN mọi thứ phức tạp
+  main:
+    web-application-type: servlet
+    banner-mode: off
+  
+  # TẮT DATABASE 100%
   autoconfigure:
     exclude:
       - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
       - org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
       - org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration
       - org.springframework.boot.autoconfigure.data.jpa.JpaRepositoriesAutoConfiguration
+      - org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
+      - org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration
   
-  # Tắt JPA hoàn toàn
+  # Tắt JPA
   jpa:
     enabled: false
   
   # Tắt datasource
   datasource:
     url: ""
-    username: ""
-    password: ""
+  
+  # Tắt thymeleaf cache
+  thymeleaf:
+    cache: false
 
-# Health check đơn giản - không cần database
-management:
-  endpoints:
-    web:
-      exposure:
-        include: health
-  endpoint:
-    health:
-      enabled: true
-  health:
-    db:
-      enabled: false
+# Log đơn giản
+logging:
+  level:
+    root: INFO
+    org.springframework: INFO
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
