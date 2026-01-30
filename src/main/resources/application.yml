@@ -3,9 +3,9 @@ server:
 
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/student?useSSL=false&serverTimezone=Asia/Ho_Chi_Minh&characterEncoding=UTF-8
+    url: jdbc:mysql://root:gdwWyhKEuHsRLckSoaytJmlSgkUVBNBd@mysql.railway.internal:3306/railway
     username: root
-    password: 123456  # THAY ĐỔI
+    password: gdwWyhKEuHsRLckSoaytJmlSgkUVBNBd 
     driver-class-name: com.mysql.cj.jdbc.Driver
     hikari:
       connection-timeout: 60000
