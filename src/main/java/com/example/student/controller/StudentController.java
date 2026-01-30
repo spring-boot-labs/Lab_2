@@ -8,16 +8,18 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.student.entity.Student;
 import com.example.student.service.StudentService;
 
 @Controller
+@RequestMapping("/")
 public class StudentController {
 
   @Autowired
   private StudentService studentService;
-  @GetMapping("/students")
+  @GetMapping("")
   public String listStudents(Model model){
     List<Student>students=studentService.getAllStudent();
     model.addAttribute("students",students);
