@@ -1,11 +1,12 @@
 server:
-  port: 8080
+  port: ${PORT:8080}  # Railway dùng biến PORT
 
 spring:
   datasource:
-    url: jdbc:mysql://root:gdwWyhKEuHsRLckSoaytJmlSgkUVBNBd@mysql.railway.internal:3306/railway
-    username: root
-    password: gdwWyhKEuHsRLckSoaytJmlSgkUVBNBd 
+    # Sử dụng biến từ Railway
+    url: jdbc:mysql://${MYSQLHOST:localhost}:${MYSQLPORT:3306}/${MYSQLDATABASE:railway}?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&useUnicode=true&characterEncoding=UTF-8
+    username: ${MYSQLUSER:root}
+    password: ${MYSQLPASSWORD:password}
     driver-class-name: com.mysql.cj.jdbc.Driver
     hikari:
       connection-timeout: 60000
